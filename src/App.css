@@ -11,9 +11,13 @@ html, body, #root {
   font-size: 14px;
 }
 
-.grey-text > span,
-.grey-text {
+#app-main .grey-text > span,
+#app-main .grey-text,
+#app-main .grey-text > a,
+#app-main .grey-text > input {
   color: #535353;
+  font-size: 14px;
+  font-family: Roboto,Arial Narrow,Geneva,Lucida Grande,Helvetica,sans-serif;
 }
 
 .logo {
@@ -49,6 +53,14 @@ html, body, #root {
   font-family: inherit;
   font-size: inherit;
   font-weight: 500;
+  min-width: 88px;
+  display: flex;
+  justify-content: center;
+}
+
+#app-main .button-custom.light {
+  background: #eee;
+  color: #535353;
 }
 
 .menu-item-container > div {
@@ -146,6 +158,19 @@ html, body, #root {
   color: #535353;
 }
 
+.checkbox-custom + .checkbox-description {
+  margin: -25px 0 0 24px;
+  color: rgba(0,0,0,0.5);
+}
+
+.inEdit .checkbox-custom {
+  margin-bottom: 30px;
+}
+
+.main-content .input-label {
+  margin-bottom: 5px;
+}
+
 h1 {
   font-size: 24px;
   font-weight: 500;
@@ -176,6 +201,7 @@ h1 {
 
 .main-content > * {
   margin-bottom: 15px;
+  color: #535353;
 }
 
 .bold-text {
@@ -186,7 +212,6 @@ h1 {
   grid-area: breadcrumbs;
   background-color: #f6f6f6;
   border-bottom: .1em solid #c3c3c3;
-  width: 100%;
   font-size: 14px;
   line-height: 3;
   z-index: 1;
@@ -237,4 +262,19 @@ h1 {
 .table-custom span,
 .table-custom div {
   color: #535353;
+  font-size: 14px;
+}
+
+.response-button-container {
+  padding-top: 40px;
+  display: flex;
+  justify-content: center;
+}
+
+.response-button-container button {
+  margin: 0 8px;
+}
+
+.table-custom-row:hover {
+  background: #F1FBFC;
 }

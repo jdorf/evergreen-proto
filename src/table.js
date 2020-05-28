@@ -212,8 +212,8 @@ export default class AdvancedTable extends React.Component {
         return (
             <Menu>
                 <Menu.Group>
-                    <Menu.Item className="grey-text"><span className="flex-row"><Icon marginRight="5px" icon="edit"/>Edit...</span></Menu.Item>
-                    <Menu.Item className="grey-text"><span className="flex-row"><Icon marginRight="5px" icon="inner-join"/>Connection</span></Menu.Item>
+                    <Menu.Item onClick={this.props.onEditClick}><span className="flex-row grey-text"><Icon marginRight="5px" icon="edit"/>Edit...</span></Menu.Item>
+                    <Menu.Item><span className="flex-row grey-text"><Icon marginRight="5px" icon="inner-join"/>Connection</span></Menu.Item>
                 </Menu.Group>
                 <Menu.Divider />
                 <Menu.Group>
@@ -225,7 +225,7 @@ export default class AdvancedTable extends React.Component {
 
     renderRow = ({ profile }) => {
         return (
-            <Table.Row key={profile.id}>
+            <Table.Row className='table-custom-row' key={profile.id}>
                 <Table.Cell display="flex" alignItems="center">
                     <Avatar name={profile.name} />
                     <Text marginLeft={8} size={300} fontWeight={500}>
