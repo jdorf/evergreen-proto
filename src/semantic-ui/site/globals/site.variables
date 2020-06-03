@@ -1,0 +1,14 @@
+/*******************************
+     User Global Variables
+*******************************/
+
+@fontName          : Roboto,Arial Narrow,Geneva,Lucida Grande,Helvetica,sans-serif;
+@headerFont        : Roboto,Arial Narrow,Geneva,Lucida Grande,Helvetica,sans-serif;
+@pageFont          : Roboto,Arial Narrow,Geneva,Lucida Grande,Helvetica,sans-serif;
+@headerFontWeight  : 500;
+
+@h1 : unit((24 / 14), rem);
+@h2 : unit((22 / 14), rem);
+@h3 : unit((18 / 14), rem);
+@h4 : unit((16 / 14), rem);
+@h5 : unit((14 / 14), rem);

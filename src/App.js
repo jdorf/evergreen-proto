@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, {useState} from 'react';
 import './App.css';
-import { InlineAlert, Checkbox, Button, Icon, TabNavigation, Tab, TextInputField, Combobox } from 'evergreen-ui';
-import Table from "./table"
+import TableExampleSortable from "./sem-ui-table"
 import timezones from './timezones.json'
+import {Message, Checkbox, Button, Icon, Menu, Input, Dropdown} from 'semantic-ui-react'
 
-const menuItemContainer =  <div className="menu-item-container">
+const menuItemContainer = <div className="menu-item-container">
     <button className="button-link link-blue" tabIndex="0" type="button">Return to V2</button>
     <div className="menu-item-KLeyWDO store-status-menu">
         <div className="store-dropdown-container-BWgHogp">
@@ -71,19 +71,19 @@ const routes = <div className="routes"><a href="/dashboard">Insights</a><a
     </svg>
 </div>
 const renderLeftNav = () => {
-    const links = ['Automation', 'Shipping', 'Printing', 'Templates', 'Inventory Management', 'Integrations', 'Branded Customer Pages' ]
+    const links = ['Automation', 'Shipping', 'Printing', 'Templates', 'Inventory Management', 'Integrations', 'Branded Customer Pages']
     return (
         <div className="left-nav">
             <div>
-                <span><Icon icon="caret-right"/></span>Account
+                <span><Icon name="caret right"/></span>Account
             </div>
             <div className="light-green">
-                <span><Icon icon="caret-down"/></span>Selling Channels<span id="triangle-left"/>
+                <span><Icon name="caret down"/></span>Selling Channels<span id="triangle-left"/>
             </div>
             <div className="white">
-                <span><Icon icon="shopping-cart"/></span>Store Setup
+                <span><Icon name="cart"/></span>Store Setup
             </div>
-            {links.map(text => <div><span><Icon icon="caret-right"/></span>{text}</div>)}
+            {links.map(text => <div><span><Icon name="caret right"/></span>{text}</div>)}
         </div>
     )
 }
@@ -91,49 +91,69 @@ const renderLeftNav = () => {
 const renderStoreSetupContent = (setInEdit, checked, setChecked) => {
     return (
         <>
-        <h1>Store Setup</h1>
-    <InlineAlert minHeight="40px" paddingX="15px" paddingY="5px" backgroundColor="#F1FBFC"><span className="bold-text">Five Stores Connected. </span>Your current subscription support stores in unlimited marketplace(s).</InlineAlert>
-    <div className="flex-row flex-space-between">
-        <Checkbox checked={checked} className="checkbox-custom" label="Show Inactive Stores" onChange={e => setChecked(e.target.checked)}></Checkbox>
-        <Button className="button-custom" onClick={() => setInEdit(true)} >Connect a Store</Button>
-    </div>
-    <Table className="table-custom" onEditClick={() => setInEdit(true)}/>
-    </>
+            <h1>Store Setup</h1>
+            <Message
+                icon='info circle'
+                content={<><span className="bold-text">Five Stores Connected. </span>Your current subscription support
+                    stores in unlimited marketplace(s).</>}
+            />
+            <div className="flex-row flex-space-between">
+                <Checkbox checked={checked} label="Show Inactive Stores" onChange={e => setChecked(e.target.checked)}/>
+                <Button primary onClick={() => setInEdit(true)}>Connect a Store</Button>
+            </div>
+            <TableExampleSortable setInEdit={setInEdit}/>
+        </>
     )
 }
 
-const tabs = [ 'General', 'Branding', 'Tracking Page', 'Returns', 'Notifications', 'Packing Slips', 'Products', 'Shipping Services', 'Activity' ]
+const tabs = ['General', 'Branding', 'Tracking Page', 'Returns', 'Notifications', 'Packing Slips', 'Products', 'Shipping Services', 'Activity']
 
-function RenderStoreEditContent ({inEdit, setInEdit}) {
-    const [ tabIndex, setTabIndex ] = useState(0)
-    const [ TZValue, setTZValue ] = useState()
-    const [ isStoreActive, setStoreActive ] = useState()
-    const [ autoUpdate, setAutoUpdate ] = useState()
-    const [ autoStandardize, setAutoStandardize ] = useState()
-    const [ autoStandardizeNonUS, setAutoStandardizeNonUS ] = useState()
+function RenderStoreEditContent({inEdit, setInEdit}) {
+    const [tabIndex, setTabIndex] = useState(0)
+    const [isStoreActive, setStoreActive] = useState()
+    const [autoUpdate, setAutoUpdate] = useState()
+    const [autoStandardize, setAutoStandardize] = useState()
+    const [autoStandardizeNonUS, setAutoStandardizeNonUS] = useState()
     return (
         <>
             <h1>Random Store</h1>
-            <TabNavigation className='grey-text'>
+            <Menu secondary>
                 {tabs.map((tab, index) => {
-                    console.log(tab, index, tabIndex)
-                    return (<Tab is="a" href="#" key={tab} isSelected={index === tabIndex} onSelect={() => setTabIndex(index)}>
-                        {tab}
-                    </Tab>)}
+                        console.log(tab, index, tabIndex)
+                        return (<Menu.Item key={tab} name={tab} isSelected={index === tabIndex}
+                                           onClick={() => setTabIndex(index)}>
+                            {tab}
+                        </Menu.Item>)
+                    }
                 )}
-            </TabNavigation>
-            <div className='input-label'>Store Name</div>
-            <TextInputField className='grey-text' width='350px' placeholder='Random Store' />
-            <div className='input-label'>Store Timezone</div>
-            <Combobox className='grey-text' marginBottom='24px' width='350px' width='350px' initialSelectedItem={timezones.find(tz => tz.value = TZValue)} items={timezones} placeholder='Select Timezone' itemToString={item => item ? item.text : ''} onChange={selected => setTZValue(selected.value)}  ></Combobox>
-            <Checkbox checked={isStoreActive} className="checkbox-custom" label="This store is active" onChange={e => setStoreActive(e.target.checked)}/>
-            <div className='checkbox-description'>Inactive stores are hidden throughout ShipStation</div>
-            <Checkbox checked={autoUpdate} className="checkbox-custom" label="Auto Update Periodically" onChange={e => setAutoUpdate(e.target.checked)}/>
-            <Checkbox checked={autoStandardize} className="checkbox-custom" label="Automatically Standardize and correct all US addresses when verified" onChange={e => setAutoStandardize(e.target.checked)}/>
-            <Checkbox checked={autoStandardizeNonUS} className="checkbox-custom" label="Automatically standardize and correct supported non-US addresses when verified" onChange={e => setAutoStandardizeNonUS(e.target.checked)}/>
-            <div className='checkbox-description'>International address verification support: CA, GB, AU, DE, FR, NO, ES, SE, IL and IT</div>
+            </Menu>
+            <div className='input-container'>
+                <div className='input-label'>Store Name</div>
+                <Input fluid placeholder='Random Store'/>
+            </div>
+            <div className='input-container'>
+                <div className='input-label'>Store Timezone</div>
+                <Dropdown fluid selection options={timezones} placeholder='Select Timezone' search></Dropdown>
+            </div>
+            <div className='flex-column'>
+                <Checkbox checked={isStoreActive} className="checkbox-custom" label="This store is active"
+                          onChange={e => setStoreActive(e.target.checked)}/>
+                <div className='checkbox-description'>Inactive stores are hidden throughout ShipStation</div>
+                <Checkbox checked={autoUpdate} className="checkbox-custom" label="Auto Update Periodically"
+                          onChange={e => setAutoUpdate(e.target.checked)}/>
+                <Checkbox checked={autoStandardize} className="checkbox-custom"
+                          label="Automatically Standardize and correct all US addresses when verified"
+                          onChange={e => setAutoStandardize(e.target.checked)}/>
+                <Checkbox checked={autoStandardizeNonUS} className="checkbox-custom"
+                          label="Automatically standardize and correct supported non-US addresses when verified"
+                          onChange={e => setAutoStandardizeNonUS(e.target.checked)}/>
+                <div className='checkbox-description'>International address verification support: CA, GB, AU, DE, FR,
+                    NO, ES, SE, IL and IT
+                </div>
+            </div>
             <div className='response-button-container'>
-                <Button className="button-custom light" onClick={() => setInEdit(false)}>Cancel</Button><Button className="button-custom">Save</Button>
+                <Button className="button-custom light" onClick={() => setInEdit(false)}>Cancel</Button><Button
+                className="button-custom">Save</Button>
             </div>
         </>
     )
@@ -141,25 +161,26 @@ function RenderStoreEditContent ({inEdit, setInEdit}) {
 
 function App() {
     const [checked, setChecked] = useState(false)
-    const [ inEdit, setInEdit ] = useState(false)
+    const [inEdit, setInEdit] = useState(false)
     const editProps = {
         inEdit, setInEdit
     }
     return (
         <div id="app-main" className="app grid">
-            <div className="logo header" >
-                <img src="https://ship0.shipstation.com/images/sswhite.svg" />
+            <div className="logo header">
+                <img src="https://ship0.shipstation.com/images/sswhite.svg"/>
             </div>
             <div className="header-content header">
-                { routes }
-                { menuItemContainer }
+                {routes}
+                {menuItemContainer}
             </div>
-            { renderLeftNav() }
+            {renderLeftNav()}
             <div className="breadcrumbs">
                 <span className="link-blue">Settings</span><span>»</span>Store Setup
             </div>
-            <div className={`main-content${inEdit ? ' inEdit' : ''}`}>
-                { inEdit ? <RenderStoreEditContent {...editProps} /> : renderStoreSetupContent(setInEdit, checked, setChecked)}
+            <div className={`flex-column main-content${inEdit ? ' inEdit' : ''}`}>
+                {inEdit ?
+                    <RenderStoreEditContent {...editProps} /> : renderStoreSetupContent(setInEdit, checked, setChecked)}
             </div>
         </div>
     );

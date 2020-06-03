@@ -1,0 +1,7 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@fontWeight: 500;
+@primaryColor: #046BC0;
+@coloredBoxShadow: none;

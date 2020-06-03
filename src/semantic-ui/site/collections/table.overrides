@@ -1,0 +1,23 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+.table-boundary .ui.table tr th {
+    position: sticky;
+    top: 0;
+}
+
+.table-boundary {
+    overflow-y: auto;
+    border: @border;
+}
+
+.table-boundary .ui.table {
+    border: none;
+}
+
+.ui.table thead th.menu-column {
+    z-index: 1;
+    width: 3em;
+    border-left: none;
+}

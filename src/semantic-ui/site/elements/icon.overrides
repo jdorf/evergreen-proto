@@ -1,0 +1,11 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+.left-nav i.icon {
+    color: #fff;
+}
+
+.white i.icon, .light-green i.icon {
+    color: inherit;
+}

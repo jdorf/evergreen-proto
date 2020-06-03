@@ -1,0 +1,30 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+.ui.button.invisible-button {
+  border: none;
+  background-color: inherit;
+  padding: 0;
+  margin: 0;
+}
+
+.ui.active.button.invisible-button {
+  background-color: @activeBackgroundColor;
+  box-shadow: @activeBoxShadow;
+  color: @activeColor;
+}
+
+.ui.button.invisible-button:hover {
+  background-color: @hoverBackgroundColor;
+  box-shadow: @hoverBoxShadow;
+  color: @hoverColor;
+}
+
+#root .invisible-button > i {
+    margin: 0;
+}
+
+.response-button-container .ui.button {
+      margin: 0 0.5rem;
+}

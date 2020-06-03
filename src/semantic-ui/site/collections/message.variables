@@ -1,0 +1,9 @@
+/*******************************
+    User Variable Overrides
+*******************************/
+
+@padding: 1em;
+@background: rgb(241, 251, 252);
+@borderRadius: none;
+@boxShadow: none;
+@iconSize: 1em;

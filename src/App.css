@@ -7,8 +7,16 @@ html, body, #root {
 }
 
 * {
+  color: #535353;
+}
+
+* {
   font-family: Roboto,Arial Narrow,Geneva,Lucida Grande,Helvetica,sans-serif;
   font-size: 14px;
+}
+
+#app-main i {
+  font-family: Icons;
 }
 
 #app-main .grey-text > span,
@@ -112,7 +120,7 @@ html, body, #root {
   border: 1px solid #fff;
 }
 
-.left-nav div.white, .left-nav div.light-green, .left-nav div.white span, .left-nav div.light-green span {
+.left-nav .white, .left-nav .light-green {
   color: #000;
 }
 
@@ -144,7 +152,6 @@ html, body, #root {
 
 .left-nav > div > span {
   margin-right: 15px;
-  color: #fff;
 }
 
 .left-nav .white,
@@ -152,30 +159,25 @@ html, body, #root {
   padding-left: 20px;
 }
 
-.checkbox-custom span {
-  font-size: inherit;
-  font-family: inherit;
-  color: #535353;
-}
-
 .checkbox-custom + .checkbox-description {
-  margin: -25px 0 0 24px;
+  margin: -3rem 0 1rem 1.8rem;
   color: rgba(0,0,0,0.5);
 }
 
 .inEdit .checkbox-custom {
-  margin-bottom: 30px;
+  margin-bottom: 3rem;
 }
 
 .main-content .input-label {
   margin-bottom: 5px;
 }
 
-h1 {
+#app-main h1 {
   font-size: 24px;
   font-weight: 500;
   color: #535353;
   margin-top: 0;
+  margin-bottom: 1rem;
 }
 
 #triangle-left {
@@ -193,15 +195,21 @@ h1 {
 
 .main-content {
   grid-area: content;
-  padding: 30px;
+  padding: 30px 30px 500px;
   z-index: 2;
   background: #fff;
   margin-top: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 .main-content > * {
   margin-bottom: 15px;
-  color: #535353;
+}
+
+.main-content.inEdit > * {
+  margin-bottom: 2rem;
 }
 
 .bold-text {
@@ -271,10 +279,19 @@ h1 {
   justify-content: center;
 }
 
-.response-button-container button {
-  margin: 0 8px;
-}
-
 .table-custom-row:hover {
   background: #F1FBFC;
+}
+
+#root ~ * .red-color, #root .red-color {
+  color: rgb(191, 14, 8);
+}
+
+.inEdit .input-container {
+  max-width: 350px;
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
 }

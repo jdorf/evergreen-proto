@@ -1,0 +1,26 @@
+/*******************************
+         Site Overrides
+*******************************/
+
+.ui.vertical.menu .item > i.icon {
+    float: none;
+    margin-right: 0.5em;
+}
+
+.ui.menu .item.borderless-menu-group::before {
+    height: 0;
+}
+
+.ui.menu div.item:hover {
+  cursor: pointer;
+  background: @hoverItemBackground;
+  color: @hoverItemTextColor;
+}
+
+.inEdit > .ui.menu {
+   margin-top: 0;
+}
+
+.inEdit > .ui.menu > .item {
+    font-weight: 500;
+}
