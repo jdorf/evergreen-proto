@@ -1,8 +1,12 @@
 import React, { useState } from 'react';
 import './App.css';
-import { InlineAlert, Checkbox, Button, Icon, TabNavigation, Tab, TextInputField, Combobox } from 'evergreen-ui';
+import { CaretRightOutlined, CaretDownOutlined, ShoppingCartOutlined } from '@ant-design/icons';
+import { Button, Checkbox, Alert, Tabs, Input, Select } from 'antd';
 import Table from "./table"
 import timezones from './timezones.json'
+
+const { TabPane } = Tabs;
+const { Option } = Select;
 
 const menuItemContainer =  <div className="menu-item-container">
     <button className="button-link link-blue" tabIndex="0" type="button">Return to V2</button>
@@ -75,15 +79,15 @@ const renderLeftNav = () => {
     return (
         <div className="left-nav">
             <div>
-                <span><Icon icon="caret-right"/></span>Account
+                <span><CaretRightOutlined /></span>Account
             </div>
             <div className="light-green">
-                <span><Icon icon="caret-down"/></span>Selling Channels<span id="triangle-left"/>
+                <span><CaretDownOutlined /></span>Selling Channels<span id="triangle-left"/>
             </div>
             <div className="white">
-                <span><Icon icon="shopping-cart"/></span>Store Setup
+                <span><ShoppingCartOutlined /></span>Store Setup
             </div>
-            {links.map(text => <div><span><Icon icon="caret-right"/></span>{text}</div>)}
+            {links.map(text => <div><span><CaretRightOutlined /></span>{text}</div>)}
         </div>
     )
 }
@@ -92,10 +96,10 @@ const renderStoreSetupContent = (setInEdit, checked, setChecked) => {
     return (
         <>
         <h1>Store Setup</h1>
-    <InlineAlert minHeight="40px" paddingX="15px" paddingY="5px" backgroundColor="#F1FBFC"><span className="bold-text">Five Stores Connected. </span>Your current subscription support stores in unlimited marketplace(s).</InlineAlert>
+        <Alert showIcon="true" type="info" message={<span><span className="bold-text">Five Stores Connected. </span>Your current subscription support stores in unlimited marketplace(s).</span>} />
     <div className="flex-row flex-space-between">
-        <Checkbox checked={checked} className="checkbox-custom" label="Show Inactive Stores" onChange={e => setChecked(e.target.checked)}></Checkbox>
-        <Button className="button-custom" onClick={() => setInEdit(true)} >Connect a Store</Button>
+        <Checkbox checked={checked} onChange={e => setChecked(e.target.checked)}>Show Inactive Stores</Checkbox>
+        <Button type="primary" className="button-custom" onClick={() => setInEdit(true)} >Connect a Store</Button>
     </div>
     <Table className="table-custom" onEditClick={() => setInEdit(true)}/>
     </>
@@ -105,7 +109,6 @@ const renderStoreSetupContent = (setInEdit, checked, setChecked) => {
 const tabs = [ 'General', 'Branding', 'Tracking Page', 'Returns', 'Notifications', 'Packing Slips', 'Products', 'Shipping Services', 'Activity' ]
 
 function RenderStoreEditContent ({inEdit, setInEdit}) {
-    const [ tabIndex, setTabIndex ] = useState(0)
     const [ TZValue, setTZValue ] = useState()
     const [ isStoreActive, setStoreActive ] = useState()
     const [ autoUpdate, setAutoUpdate ] = useState()
@@ -114,26 +117,34 @@ function RenderStoreEditContent ({inEdit, setInEdit}) {
     return (
         <>
             <h1>Random Store</h1>
-            <TabNavigation className='grey-text'>
+            <Tabs className='grey-text' type="card" defaultActiveKey="1">
                 {tabs.map((tab, index) => {
-                    console.log(tab, index, tabIndex)
-                    return (<Tab is="a" href="#" key={tab} isSelected={index === tabIndex} onSelect={() => setTabIndex(index)}>
-                        {tab}
-                    </Tab>)}
+                    return (<TabPane key={index} tab={tab}/>)}
                 )}
-            </TabNavigation>
-            <div className='input-label'>Store Name</div>
-            <TextInputField className='grey-text' width='350px' placeholder='Random Store' />
-            <div className='input-label'>Store Timezone</div>
-            <Combobox className='grey-text' marginBottom='24px' width='350px' width='350px' initialSelectedItem={timezones.find(tz => tz.value = TZValue)} items={timezones} placeholder='Select Timezone' itemToString={item => item ? item.text : ''} onChange={selected => setTZValue(selected.value)}  ></Combobox>
-            <Checkbox checked={isStoreActive} className="checkbox-custom" label="This store is active" onChange={e => setStoreActive(e.target.checked)}/>
+            </Tabs>
+            <div className="select-container">
+                <div className='input-label'>Store Name</div>
+                <Input className='grey-text' placeholder='Random Store' />
+                <div className='input-label'>Store Timezone</div>
+                <Select
+                    className='grey-text'
+                    showSearch
+                    placeholder="Select Timezone"
+                    filterOption={(input, option) =>
+                        option.children.toLowerCase().includes(input.toLowerCase())
+                    }
+                >
+                    {timezones.map((tz) => <Option value={tz.value} >{tz.text}</Option>)}
+                </Select>
+            </div>
+            <Checkbox checked={isStoreActive} className="checkbox-custom" onChange={e => setStoreActive(e.target.checked)}>This store is active</Checkbox>
             <div className='checkbox-description'>Inactive stores are hidden throughout ShipStation</div>
-            <Checkbox checked={autoUpdate} className="checkbox-custom" label="Auto Update Periodically" onChange={e => setAutoUpdate(e.target.checked)}/>
-            <Checkbox checked={autoStandardize} className="checkbox-custom" label="Automatically Standardize and correct all US addresses when verified" onChange={e => setAutoStandardize(e.target.checked)}/>
-            <Checkbox checked={autoStandardizeNonUS} className="checkbox-custom" label="Automatically standardize and correct supported non-US addresses when verified" onChange={e => setAutoStandardizeNonUS(e.target.checked)}/>
+            <Checkbox checked={autoUpdate} className="checkbox-custom" onChange={e => setAutoUpdate(e.target.checked)}>Auto Update Periodically</Checkbox>
+            <Checkbox checked={autoStandardize} className="checkbox-custom" onChange={e => setAutoStandardize(e.target.checked)}>Automatically Standardize and correct all US addresses when verified</Checkbox>
+            <Checkbox checked={autoStandardizeNonUS} className="checkbox-custom" onChange={e => setAutoStandardizeNonUS(e.target.checked)}>Automatically standardize and correct supported non-US addresses when verified</Checkbox>
             <div className='checkbox-description'>International address verification support: CA, GB, AU, DE, FR, NO, ES, SE, IL and IT</div>
             <div className='response-button-container'>
-                <Button className="button-custom light" onClick={() => setInEdit(false)}>Cancel</Button><Button className="button-custom">Save</Button>
+                <Button className="button-custom" onClick={() => setInEdit(false)}>Cancel</Button><Button type="primary" className="button-custom">Save</Button>
             </div>
         </>
     )
@@ -141,7 +152,7 @@ function RenderStoreEditContent ({inEdit, setInEdit}) {
 
 function App() {
     const [checked, setChecked] = useState(false)
-    const [ inEdit, setInEdit ] = useState(false)
+    const [ inEdit, setInEdit ] = useState(true)
     const editProps = {
         inEdit, setInEdit
     }
