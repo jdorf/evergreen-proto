@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import './App.css';
 import { CaretRightOutlined, CaretDownOutlined, ShoppingCartOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Alert, Tabs, Input, Select } from 'antd';
-import Table from "./table"
+import Table from "./antd-table"
 import timezones from './timezones.json'
 
 const { TabPane } = Tabs;
@@ -152,7 +152,7 @@ function RenderStoreEditContent ({inEdit, setInEdit}) {
 
 function App() {
     const [checked, setChecked] = useState(false)
-    const [ inEdit, setInEdit ] = useState(true)
+    const [ inEdit, setInEdit ] = useState(false)
     const editProps = {
         inEdit, setInEdit
     }
@@ -169,7 +169,7 @@ function App() {
             <div className="breadcrumbs">
                 <span className="link-blue">Settings</span><span>»</span>Store Setup
             </div>
-            <div className={`main-content${inEdit ? ' inEdit' : ''}`}>
+            <div className={`flex-column main-content${inEdit ? ' inEdit' : ''}`}>
                 { inEdit ? <RenderStoreEditContent {...editProps} /> : renderStoreSetupContent(setInEdit, checked, setChecked)}
             </div>
         </div>
