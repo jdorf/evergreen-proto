@@ -108,8 +108,7 @@ const renderStoreSetupContent = (setInEdit, checked, setChecked) => {
 
 const tabs = [ 'General', 'Branding', 'Tracking Page', 'Returns', 'Notifications', 'Packing Slips', 'Products', 'Shipping Services', 'Activity' ]
 
-function RenderStoreEditContent ({inEdit, setInEdit}) {
-    const [ TZValue, setTZValue ] = useState()
+function RenderStoreEditContent ({ setInEdit }) {
     const [ isStoreActive, setStoreActive ] = useState()
     const [ autoUpdate, setAutoUpdate ] = useState()
     const [ autoStandardize, setAutoStandardize ] = useState()
